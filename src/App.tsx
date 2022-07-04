@@ -8,6 +8,7 @@ function App() {
   const [allTodos, setAllTodos] = useState<string[]>([])
   const [count, setCount] = useState(0)
   const [viewModal, setViewModal] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(false)
 
   console.log(setViewModal)
 
@@ -16,9 +17,6 @@ function App() {
       setTodo("")
       setAllTodos([...allTodos, todo])
       setCount(count)
-      if (allTodos.length == 9) {
-       setViewModal(true)       
-      }
     }
     e.preventDefault()
   }
@@ -28,9 +26,33 @@ function App() {
   }
 
   function clearTodos(e: any) {
-    setAllTodos([])
-    setViewModal(false)
-    e.preventDefault()
+    if (viewModal === false) {
+      setViewModal(true)
+    }
+    else {
+      setViewModal(false)
+    }
+      e.preventDefault()
+
+      console.log('oi')
+  }
+
+  function disableButton() {
+    if (allTodos.length < 1) {
+      setIsDisabled(true)
+      return isDisabled
+    }
+    else {
+      setIsDisabled(false)
+      return isDisabled
+    }
+  }
+
+  function closeModal() {
+    if (viewModal === true) {
+      setViewModal(false)
+    }
+    console.log("I'm being clicked!")
   }
 
   return (
@@ -44,6 +66,9 @@ function App() {
         count={count}
         maxLength={200}
         viewModal={viewModal}
+        disableButton={disableButton}
+        setViewModal={true}
+        closeModal={closeModal}
         />
     </>
       
