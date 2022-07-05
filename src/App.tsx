@@ -9,8 +9,7 @@ function App() {
   const [count, setCount] = useState(0)
   const [viewModal, setViewModal] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
-
-  console.log(setViewModal)
+  const [overlay, setOverlay] = useState(false)
 
   function handleClick(e: any) {
     if (todo !== "" && todo !== " ") {
@@ -33,8 +32,6 @@ function App() {
       setViewModal(false)
     }
       e.preventDefault()
-
-      console.log('oi')
   }
 
   function disableButton() {
@@ -48,11 +45,28 @@ function App() {
     }
   }
 
+  function modalOverlay() {
+    if (viewModal === true) {
+      console.log("yes")
+      setOverlay(true)
+      return overlay
+    }
+    else {
+      setOverlay(false)
+      return overlay
+    }
+    
+  }
+
   function closeModal() {
     if (viewModal === true) {
       setViewModal(false)
     }
-    console.log("I'm being clicked!")
+  }
+
+  function clearTasks() {
+    setViewModal(false)
+    setAllTodos([])
   }
 
   return (
@@ -69,6 +83,8 @@ function App() {
         disableButton={disableButton}
         setViewModal={true}
         closeModal={closeModal}
+        clearTasks={clearTasks}
+        modalOverlay={modalOverlay}
         />
     </>
       

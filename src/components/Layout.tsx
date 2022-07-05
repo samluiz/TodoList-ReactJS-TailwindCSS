@@ -10,6 +10,8 @@ interface IProps {
   handleChange: (e: any) => void;
   disableButton: () => boolean;
   closeModal: () => void;
+  clearTasks: () => void;
+  modalOverlay: () => boolean;
   todo: string;
   allTodos: string[];
   count: number;
@@ -18,9 +20,13 @@ interface IProps {
   setViewModal: boolean;
 }
 
-const Layout: React.FC<IProps> = ({handleClick, handleChange, clearTodos, todo, allTodos, count, viewModal, disableButton, setViewModal, closeModal}) => {
+const Layout: React.FC<IProps> = ( {handleClick, handleChange, clearTodos, todo, allTodos, count, viewModal, disableButton, setViewModal, closeModal, clearTasks, modalOverlay} ) => {
   return (
-    <main className="  flex justify-center flex-row bg-neutral-700">
+    <>
+    {viewModal ? 
+      <Modal closeModal={closeModal} clearTasks={clearTasks} /> 
+      : null}
+    <main className={`  flex justify-center flex-row bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 ${modalOverlay() ? ' blur-sm pointer-events-none' : null} ` }>
         <div className="flex flex-col items-center gap-6">
           <img src={Image} alt="agenda" className="w-40 mt-4 h-40 cursor-pointer" />
           <ManageTask 
@@ -37,11 +43,11 @@ const Layout: React.FC<IProps> = ({handleClick, handleChange, clearTodos, todo, 
           allTodos={allTodos} 
           count={count} />
 
-          {viewModal ? 
-          <Modal clearTodos={clearTodos} viewModal={false} setViewModal={false} closeModal={closeModal}/> 
-          : null}
+          
           
       </main>
+    </>
+    
   )
 }
 
