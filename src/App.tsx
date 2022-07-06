@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './index.css'
 import Layout from './components/Layout'
+import { isContentEditable } from '@testing-library/user-event/dist/utils'
 
 function App() {
 
@@ -11,6 +12,8 @@ function App() {
   const [isDisabled, setIsDisabled] = useState(false)
   const [overlay, setOverlay] = useState(false)
 
+
+// Function to add task
   function handleClick(e: any) {
     if (todo !== "" && todo !== " ") {
       setTodo("")
@@ -20,10 +23,12 @@ function App() {
     e.preventDefault()
   }
 
+// Function to get the value of the textarea
   function handleChange(e: any) {
     setTodo(e.target.value)
   }
 
+// Function to show pop up when click on clear button
   function clearTodos(e: any) {
     if (viewModal === false) {
       setViewModal(true)
@@ -34,6 +39,8 @@ function App() {
       e.preventDefault()
   }
 
+
+// Function to make button gray when disabled
   function disableButton() {
     if (allTodos.length < 1) {
       setIsDisabled(true)
@@ -45,9 +52,9 @@ function App() {
     }
   }
 
+// Function to blur background behind pop up
   function modalOverlay() {
     if (viewModal === true) {
-      console.log("yes")
       setOverlay(true)
       return overlay
     }
@@ -58,15 +65,23 @@ function App() {
     
   }
 
+// Function to close modal
   function closeModal() {
     if (viewModal === true) {
       setViewModal(false)
     }
   }
 
+// Function to clear all tasks
   function clearTasks() {
     setViewModal(false)
     setAllTodos([])
+  }
+
+  // Function to make the element editable on click 
+  function editTask(e: any) {
+    console.log("oie")
+    
   }
 
   return (
@@ -85,6 +100,7 @@ function App() {
         closeModal={closeModal}
         clearTasks={clearTasks}
         modalOverlay={modalOverlay}
+        editTask={editTask}
         />
     </>
       
