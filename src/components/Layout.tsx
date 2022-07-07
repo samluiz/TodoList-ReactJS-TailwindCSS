@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ScrollAnimationDesktop from './ScrollAnimationDesktop';
 import ManageTask from './ManageTask';
 import Tasks from './Tasks';
 import Image from '../img/List.svg'
@@ -12,24 +13,27 @@ interface IProps {
   closeModal: () => void;
   clearTasks: () => void;
   modalOverlay: () => boolean;
-  editTask: (e: any) => void;
+  clearTask: (e: any, id: number, key: number) => void;
   todo: string;
   allTodos: string[];
+  id: number;
   count: number;
   maxLength: number;
   viewModal: boolean;
   setViewModal: boolean;
 }
 
-const Layout: React.FC<IProps> = ( {handleClick, handleChange, clearTodos, todo, allTodos, count, viewModal, disableButton, setViewModal, closeModal, clearTasks, modalOverlay, editTask} ) => {
+
+
+const Layout: React.FC<IProps> = ( {handleClick, handleChange, clearTodos, todo, allTodos, count, viewModal, disableButton, setViewModal, closeModal, clearTasks, modalOverlay, clearTask, id} ) => {
   return (
     <>
     {viewModal ? 
       <Modal closeModal={closeModal} clearTasks={clearTasks} /> 
       : null}
-     <div className={` ${modalOverlay() ? ' blur-sm pointer-events-none' : null} ` }>
+     <div className={` ${modalOverlay() ? ' blur-sm pointer-events-none overflow-hidden' : null} `}>
     
-    <main className={`  grid place-items-center grid-rows-2 grid-flow-col flex-row min-h-screen bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 `}>
+    <main className={` scrollbar-hide grid place-items-center grid-rows-2 grid-flow-col flex-row min-h-screen bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 `}>
         <div className="flex flex-col items-center gap-6">
           <img src={Image} alt="agenda" className="w-40 mt-4 h-40 cursor-pointer" />
           <ManageTask 
@@ -43,13 +47,18 @@ const Layout: React.FC<IProps> = ( {handleClick, handleChange, clearTodos, todo,
 
             />
         </div>
+
+    <ScrollAnimationDesktop allTodos={allTodos} />
+        
        
       </main>
-      <section className='min-h-screen flex flex-row justify-evenly'>
+      <section className='min-h-fit flex flex-row justify-evenly'>
       <Tasks 
           allTodos={allTodos} 
           count={count}
-          editTask={editTask} />
+          clearTask={clearTask}
+          id={id}
+          />
       </section>
     </div>
     </>

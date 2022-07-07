@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import './index.css'
 import Layout from './components/Layout'
-import { isContentEditable } from '@testing-library/user-event/dist/utils'
 
 function App() {
 
@@ -11,6 +10,9 @@ function App() {
   const [viewModal, setViewModal] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
   const [overlay, setOverlay] = useState(false)
+  const [animationState, setAnimationState] = useState({
+    isStopped: false, isPaused: false
+  })
 
 
 // Function to add task
@@ -19,8 +21,9 @@ function App() {
       setTodo("")
       setAllTodos([...allTodos, todo])
       setCount(count)
+      e.preventDefault()
     }
-    e.preventDefault()
+    
   }
 
 // Function to get the value of the textarea
@@ -78,10 +81,10 @@ function App() {
     setAllTodos([])
   }
 
-  // Function to make the element editable on click 
-  function editTask(e: any) {
-    console.log("oie")
-    
+// Function to clear a task
+  function clearTask(e: any, id: number, key: number) {
+    console.log("oi")
+    setAllTodos(allTodos.filter((e) => key !== id ))
   }
 
   return (
@@ -100,7 +103,9 @@ function App() {
         closeModal={closeModal}
         clearTasks={clearTasks}
         modalOverlay={modalOverlay}
-        editTask={editTask}
+        clearTask={clearTask}
+        key={allTodos.length}
+        id={ allTodos.length }
         />
     </>
       
