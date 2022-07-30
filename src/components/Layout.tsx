@@ -13,10 +13,8 @@ interface IProps {
   closeModal: () => void;
   clearTasks: () => void;
   modalOverlay: () => boolean;
-  clearTask: (e: any, id: number, key: number) => void;
   todo: string;
   allTodos: string[];
-  id: number;
   count: number;
   maxLength: number;
   viewModal: boolean;
@@ -25,7 +23,7 @@ interface IProps {
 
 
 
-const Layout: React.FC<IProps> = ( {handleClick, handleChange, clearTodos, todo, allTodos, count, viewModal, disableButton, setViewModal, closeModal, clearTasks, modalOverlay, clearTask, id} ) => {
+const Layout: React.FC<IProps> = ( {handleClick, handleChange, clearTodos, todo, allTodos, count, viewModal, disableButton, setViewModal, closeModal, clearTasks, modalOverlay} ) => {
   return (
     <>
     {viewModal ? 
@@ -56,8 +54,6 @@ const Layout: React.FC<IProps> = ( {handleClick, handleChange, clearTodos, todo,
       <Tasks 
           allTodos={allTodos} 
           count={count}
-          clearTask={clearTask}
-          id={id}
           />
       </section>
     </div>

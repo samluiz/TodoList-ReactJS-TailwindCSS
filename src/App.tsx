@@ -4,15 +4,12 @@ import Layout from './components/Layout'
 
 function App() {
 
-  const [todo, setTodo] = useState("")
+  const [todo, setTodo] = useState<any>("")
   const [allTodos, setAllTodos] = useState<string[]>([])
   const [count, setCount] = useState(0)
   const [viewModal, setViewModal] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
   const [overlay, setOverlay] = useState(false)
-  const [animationState, setAnimationState] = useState({
-    isStopped: false, isPaused: false
-  })
 
 
 // Function to add task
@@ -81,11 +78,10 @@ function App() {
     setAllTodos([])
   }
 
-// Function to clear a task
-  function clearTask(e: any, id: number, key: number) {
-    console.log("oi")
-    setAllTodos(allTodos.filter((e) => key !== id ))
-  }
+// Function to clear one task
+function removeTask(task: any) {
+  setTodo(allTodos.filter((todo) => todo !== task))
+}
 
   return (
     <>
@@ -103,9 +99,6 @@ function App() {
         closeModal={closeModal}
         clearTasks={clearTasks}
         modalOverlay={modalOverlay}
-        clearTask={clearTask}
-        key={allTodos.length}
-        id={ allTodos.length }
         />
     </>
       
